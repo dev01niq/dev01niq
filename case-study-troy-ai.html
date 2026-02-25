@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Architecting an Event-Driven AI Platform | spidy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a192f; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+        .prose-invert a { color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-[#0a192f] text-gray-300 font-sans leading-relaxed">
+    <div class="container mx-auto p-8">
+        <div class="max-w-4xl mx-auto mb-8">
+            <a href="blog.html" class="text-blue-400 hover:text-blue-500 transition-colors duration-300">&larr; Back to All Articles</a>
+        </div>
+        <header class="flex justify-between items-center mb-16">
+            <div class="text-2xl font-bold text-white tracking-wider"><a href="index.html">spidy.</a></div>
+            <nav class="hidden md:flex space-x-8 text-lg">
+                 <a href="index.html#about" class="hover:text-blue-500 transition-colors duration-300">About</a>
+                <a href="index.html#projects" class="hover:text-blue-500 transition-colors duration-300">Projects</a>
+                <a href="index.html#experience" class="hover:text-blue-500 transition-colors duration-300">Experience</a>
+                <a href="index.html#education" class="hover:text-blue-500 transition-colors duration-300">Education</a>
+                <a href="index.html#contact" class="hover:text-blue-500 transition-colors duration-300">Contact</a>
+            </nav>
+        </header>
+        <main>
+            <article class="prose prose-invert lg:prose-xl max-w-4xl mx-auto">
+                <header class="mb-12">
+                    <h1 class="text-5xl font-bold text-white">From Bottleneck to Scale: Architecting an Event-Driven AI Platform on AWS</h1>
+                    <p class="text-lg text-gray-400">A technical deep dive into the Troy AI reservation and review automation platform.</p>
+                </header>
+
+                <section class="mt-12">
+                    <h2>The Challenge: The Onboarding Bottleneck</h2>
+                    <p>As a Founding Engineer at Troy AI, my core mission was to build a platform that could seamlessly automate customer engagement for restaurants. A critical feature was the ability to ingest years of historical customer reviews from platforms like Google, TripAdvisor, and OpenTable during client onboarding. This data was essential for training our sentiment analysis models and auto-reply generation systems.</p>
+                    <p>The initial architecture handled this via a synchronous API call: the frontend would wait as the backend processed thousands of reviews in a single, long-running request. This created a significant performance bottleneck. Onboarding sessions would frequently time out, the system was difficult to scale, and any single point of failure could corrupt the entire process, forcing a manual restart.</p>
+                </section>
+
+                <section class="mt-12">
+                    <h2>The Architecture: Embracing an Event-Driven Approach</h2>
+                    <p>It was clear that a synchronous, monolithic approach was not viable. The solution was to re-architect the ingestion pipeline into an asynchronous, event-driven system using a microservices pattern on AWS. This fundamentally decoupled the initial request from the complex, long-running background work.</p>
+                    <ol>
+                        <li><strong>API Gateway & Initial Lambda Trigger:</strong> The client's onboarding request now hits a lightweight API Gateway endpoint, which simply triggers a primary AWS Lambda function. This function's only job is to validate the request and drop a message into an Amazon SQS (Simple Queue Service) queue. The frontend receives an immediate "Accepted" response, and the user can move on.</li>
+                        <li><strong>Decoupling with SQS:</strong> The SQS queue acts as a durable buffer. It can hold thousands of ingestion tasks, ensuring that even if downstream services fail, the work is never lost.</li>
+                        <li><strong>Worker Lambdas for Processing:</strong> A pool of "worker" Lambda functions constantly polls the SQS queue for new tasks. Each Lambda is responsible for processing a single review or a small batch of reviews. This allows for massive parallelism—we can process hundreds of reviews simultaneously.</li>
+                        <li><strong>Resilience with Dead-Letter Queues (DLQs):</strong> If a worker Lambda fails to process a message after several attempts (e.g., due to a third-party API outage), the message is automatically moved to a Dead-Letter Queue. This isolates the problematic data and prevents a single bad message from halting the entire pipeline. An automated CloudWatch alarm then notifies the engineering team to investigate the DLQ.</li>
+                        <li><strong>Storing Results in PostgreSQL:</strong> Once a review is successfully processed and analyzed, the worker Lambda stores the structured data in our primary PostgreSQL database on RDS.</li>
+                    </ol>
+                    <p>This architecture transformed the ingestion process from a fragile, blocking operation into a resilient, scalable, and observable workflow.</p>
+                </section>
+                
+                <section class="mt-12">
+                    <h2>The Impact & Key Learnings</h2>
+                    <p>The shift to an event-driven model had a profound and measurable impact on the platform:</p>
+                    <ul>
+                        <li><strong>Latency Reduction:</strong> The initial onboarding request time dropped from minutes (or a timeout) to under 200 milliseconds.</li>
+                        <li><strong>Improved Scalability & Reliability:</strong> The system can now handle massive spikes in ingestion tasks by automatically scaling the number of worker Lambdas. The use of queues and DLQs ensures that we can process millions of reviews without data loss.</li>
+                        <li><strong>Foundation for Future AI Workflows:</strong> This asynchronous architecture became the blueprint for all subsequent AI processing on the platform, from generating auto-replies to running complex analytics, enabling us to build more sophisticated features with confidence.</li>
+                    </ul>
+                    <p>This project was a powerful lesson in the importance of choosing the right architecture for the job. By embracing asynchronicity, we not only solved our immediate performance issues but also built a more robust and scalable foundation for the entire Troy AI platform.</p>
+                </section>
+            </article>
+        </main>
+        <footer class="text-center py-8 border-t border-gray-800 mt-16">
+            <p>&copy; 2026 spidy. Designed & Built with a spark of creativity.</p>
+        </footer>
+    </div>
+</body>
+</html>

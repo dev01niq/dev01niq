@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Building for Trust on GCP | spidy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a192f; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+        .prose-invert a { color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-[#0a192f] text-gray-300 font-sans leading-relaxed">
+    <div class="container mx-auto p-8">
+        <div class="max-w-4xl mx-auto mb-8">
+            <a href="blog.html" class="text-blue-400 hover:text-blue-500 transition-colors duration-300">&larr; Back to All Articles</a>
+        </div>
+        <header class="flex justify-between items-center mb-16">
+            <div class="text-2xl font-bold text-white tracking-wider"><a href="index.html">spidy.</a></div>
+            <nav class="hidden md:flex space-x-8 text-lg">
+                 <a href="index.html#about" class="hover:text-blue-500 transition-colors duration-300">About</a>
+                <a href="index.html#projects" class="hover:text-blue-500 transition-colors duration-300">Projects</a>
+                <a href="index.html#blog" class="hover:text-blue-500 transition-colors duration-300">Blog</a>
+                <a href="index.html#experience" class="hover:text-blue-500 transition-colors duration-300">Experience</a>
+                <a href="index.html#education" class="hover:text-blue-500 transition-colors duration-300">Education</a>
+                <a href="index.html#contact" class="hover:text-blue-500 transition-colors duration-300">Contact</a>
+            </nav>
+        </header>
+        <main>
+            <article class="prose prose-invert lg:prose-xl max-w-4xl mx-auto">
+                <header class="mb-12">
+                    <h1 class="text-5xl font-bold text-white">Building for Trust: Secure Data Workspaces & Custom Recovery on GCP</h1>
+                    <p class="text-lg text-gray-400">A deep dive into engineering reliable and secure data solutions for a healthcare platform.</p>
+                </header>
+
+                <section class="mt-12">
+                    <h2>The Challenge: Balancing Accessibility with Security</h2>
+                    <p>While working on a healthcare data platform, we faced two critical engineering challenges that revolved around a central theme: trust. Firstly, our clients—researchers and data scientists—needed a secure and isolated environment to analyze sensitive healthcare datasets. Secondly, our own development teams needed a more reliable way to recover from database migration failures without risking data loss or extensive downtime, as the native GCP restore functionality was an all-or-nothing operation.</p>
+                </section>
+
+                <section class="mt-12">
+                    <h2>The Solution Part 1: Secure, Automated Workspace Provisioning</h2>
+                    <p>To provide secure analytics environments, I designed and built an automated workspace provisioning system on Google Cloud Platform. The goal was to give users powerful tools while maintaining stringent security and isolation.</p>
+                    <ol>
+                        <li><strong>Microservice Architecture:</strong> A new set of microservices was built using Python (Django) to handle all aspects of workspace management, from creation to decommissioning.</li>
+                        <li><strong>Automated VM Provisioning:</strong> When a client initiated a new workspace, the service would automatically provision a new Virtual Machine instance in a dedicated, firewalled VPC.</li>
+                        <li><strong>Dynamic Jupyter Environments:</strong> Each VM came pre-configured with a secure, dynamic Jupyter environment, allowing data scientists to begin their analysis immediately without any manual setup.</li>
+                        <li><strong>Role-Based Access Control (RBAC):</strong> Access to specific datasets was governed by a strict RBAC model. The provisioning service would only mount the datasets that the user was explicitly authorized to view, ensuring data segregation and compliance.</li>
+                    </ol>
+                    <p>This system empowered our clients to perform complex ML and analytics workflows directly on the platform, confident that their data was secure and isolated.</p>
+                </section>
+                
+                <section class="mt-12">
+                    <h2>The Solution Part 2: A Custom Table-Level Recovery Pipeline</h2>
+                    <p>To solve the database recovery problem, I engineered a custom backup and restore pipeline that went beyond GCP's native capabilities.</p>
+                     <ol>
+                        <li><strong>Scheduled Backups:</strong> The pipeline performed regular, automated backups of critical PostgreSQL tables, storing them securely in Google Cloud Storage.</li>
+                        <li><strong>Controlled Recovery Workflow:</strong> In the event of a failed migration, a developer could trigger a controlled recovery. The workflow would spin up a temporary, isolated environment and restore the specific affected tables from the last known good backup.</li>
+                        <li><strong>Validation and Promotion:</strong> The developer could then validate the restored data in the temporary environment. Once confirmed, the corrected data was promoted back to the production database, resolving the issue with surgical precision and minimal downtime.</li>
+                    </ol>
+                </section>
+
+                <section class="mt-12">
+                    <h2>The Impact & Key Learnings</h2>
+                    <p>These two initiatives significantly enhanced the reliability and trustworthiness of the entire platform:</p>
+                    <ul>
+                        <li><strong>Enabled Secure Analytics:</strong> The workspace provisioning system became a key feature, enabling secure and powerful data science workflows that drove significant value for our clients.</li>
+                        <li><strong>Improved Migration Safety:</strong> The custom recovery pipeline was a game-changer for our development teams. It dramatically reduced the risk associated with database migrations and decreased our mean time to recovery (MTTR) for such incidents by over 90%.</li>
+                    </ul>
+                    <p>This work underscored a critical lesson: in a data-sensitive industry like healthcare, the most valuable features are often those that build trust. By engineering for security and reliability first, we enabled our clients and our own teams to innovate with greater speed and confidence.</p>
+                </section>
+            </article>
+        </main>
+        <footer class="text-center py-8 border-t border-gray-800 mt-16">
+            <p>&copy; 2026 spidy. Designed & Built with a spark of creativity.</p>
+        </footer>
+    </div>
+</body>
+</html>
