@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | spidy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/spider-theme.css">
+    <style>
+        body {
+            font-family: 'Fira Code', monospace;
+        }
+    </style>
+</head>
+<body class="bg-[#0a0a0a] text-gray-300">
+    <div id="spider-web-bg"></div>
+
+    <div class="container mx-auto p-8 relative z-10">
+        <header id="main-header" class="flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-white tracking-wider">[ spidy ]</a>
+            <nav>
+                <a href="blog.html" id="spider-nav-link" class="relative block">
+                    <svg id="spider-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="spider-icon"><path d="M12 6.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/><path d="M12 6.5V2"/><path d="M12 15.5V22"/><path d="m4.7 4.7 2.1 2.1"/><path d="m17.2 17.2 2.1 2.1"/><path d="m4.7 19.3 2.1-2.1"/><path d="m17.2 6.8-2.1 2.1"/><path d="M2 11h4.5"/><path d="M17.5 11H22"/></svg>
+                </a>
+            </nav>
+        </header>
+
+        <main>
+            <section id="blog-listing" class="py-20">
+                <h1 class="text-5xl font-bold text-white text-center mb-12">// The Spider's Log</h1>
+                <div id="blog-grid" class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Post 1 -->
+                    <a href="blog/troy-ai-case-study.html" class="blog-card glass-effect block p-8 rounded-lg">
+                        <div class="blog-thumbnail-placeholder"></div>
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">From Bottleneck to Scale: Architecting an Event-Driven AI Platform on AWS</h3>
+                        <p>A technical deep dive into the Troy AI reservation and review automation platform, exploring the shift from a synchronous API to a resilient, event-driven architecture.</p>
+                    </a>
+                    <!-- Post 2 -->
+                    <a href="blog/gcp-data-workspaces-case-study.html" class="blog-card glass-effect block p-8 rounded-lg">
+                        <div class="blog-thumbnail-placeholder"></div>
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Building for Trust: Secure Data Workspaces & Custom Recovery on GCP</h3>
+                        <p>A deep dive into engineering reliable and secure data solutions for a healthcare platform, focusing on automated provisioning and custom database recovery pipelines.</p>
+                    </a>
+                    <!-- More cards can be added here -->
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center py-8 border-t border-gray-800 mt-8">
+            <p>&copy; 2026 spidy. The web was spun with code.</p>
+        </footer>
+    </div>
+</body>
+</html>

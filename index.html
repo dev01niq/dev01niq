@@ -3,221 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>spidy | Senior Full-Stack & AI Engineer</title>
+    <title>spidy | Creative Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/spider-theme.css">
     <style>
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a192f; }
-        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+        body {
+            font-family: 'Fira Code', monospace;
+        }
     </style>
 </head>
-<body class="bg-[#0a192f] text-gray-300 font-sans leading-relaxed">
-    <div class="container mx-auto p-8">
-        <header class="flex justify-between items-center mb-16">
-            <div class="text-2xl font-bold text-white tracking-wider">spidy.</div>
-            <nav class="hidden md:flex space-x-8 text-lg">
-                <a href="#about" class="hover:text-blue-500 transition-colors duration-300">About</a>
-                <a href="#projects" class="hover:text-blue-500 transition-colors duration-300">Projects</a>
-                <a href="#blog" class="hover:text-blue-500 transition-colors duration-300">Blog</a>
-                <a href="#experience" class="hover:text-blue-500 transition-colors duration-300">Experience</a>
-                <a href="#education" class="hover:text-blue-500 transition-colors duration-300">Education</a>
-                <a href="#contact" class="hover:text-blue-500 transition-colors duration-300">Contact</a>
+<body class="bg-[#0a0a0a] text-gray-300">
+    <div id="spider-web-bg"></div>
+
+    <div class="container mx-auto p-8 relative z-10">
+        <header id="main-header" class="flex justify-between items-center">
+            <div class="text-2xl font-bold text-white tracking-wider">[ spidy ]</div>
+            <nav>
+                <a href="blog.html" id="spider-nav-link" class="relative block">
+                    <svg id="spider-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="spider-icon"><path d="M12 6.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/><path d="M12 6.5V2"/><path d="M12 15.5V22"/><path d="m4.7 4.7 2.1 2.1"/><path d="m17.2 17.2 2.1 2.1"/><path d="m4.7 19.3 2.1-2.1"/><path d="m17.2 6.8-2.1 2.1"/><path d="M2 11h4.5"/><path d="M17.5 11H22"/></svg>
+                </a>
             </nav>
         </header>
+
         <main>
-            <section id="hero" class="text-center py-20">
-                <h1 class="text-5xl md:text-7xl font-bold text-white mb-4">Architecting Intelligence, End-to-End.</h1>
-                <p class="text-xl md:text-2xl text-blue-400 mb-8">Senior Full-Stack & AI Engineer</p>
-                <p class="max-w-3xl mx-auto text-lg">With 8+ years of expertise in production-grade conversational AI, I architect and build the intelligent systems that power modern digital experiences.</p>
+            <section id="hero" class="text-center h-screen flex flex-col justify-center items-center -mt-24">
+                <canvas id="hero-animation-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
+                <div class="relative z-10">
+                    <h1 class="text-5xl md:text-7xl font-bold text-white mb-4 glitch" data-text="Code is the Web.">Code is the Web.</h1>
+                    <p class="text-xl md:text-2xl text-cyan-400">I am the spider who spins it.</p>
+                </div>
             </section>
+
             <section id="about" class="py-20">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h2 class="text-4xl font-bold text-white mb-6">About Me</h2>
+                <h2 class="text-4xl font-bold text-white text-center mb-12">// The Spider Behind the Code</h2>
+                <div class="max-w-4xl mx-auto text-center glass-effect p-8">
                     <p class="text-lg leading-relaxed">
                         I am a results-oriented Full Stack Engineer specializing in the design, development, and scaling of sophisticated conversational AI systems. My experience is rooted in Voice AI and leveraging LLMs to create intuitive conversation flows, all integrated seamlessly with modern telephony. I thrive in agile environments, leading teams to build high-quality, impactful products while architecting scalable, secure, and efficient microservices solutions across Azure, AWS, and GCP.
                     </p>
                 </div>
             </section>
-            <section id="competencies" class="py-20">
-                <h2 class="text-4xl font-bold text-white text-center mb-12">Core Competencies</h2>
+
+            <section id="tech-stack" class="py-20">
+                <h2 class="text-4xl font-bold text-white text-center mb-12">// Nodes in the Web</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="bg-[#112240] p-6 rounded-lg shadow-lg">
-                        <h3 class="text-2xl font-bold text-blue-400 mb-4">Frontend & Web Tech</h3>
+                    <div class="glass-effect p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Frontend & Web</h3>
                         <ul class="space-y-2">
                             <li>React, Next.js, Angular</li>
-                            <li>TypeScript, JavaScript (ES6+)</li>
-                            <li>HTML, CSS, Tailwind, SCSS</li>
-                            <li>Ionic, Cordova</li>
+                            <li>TypeScript, JavaScript</li>
+                            <li>HTML, CSS, Tailwind</li>
                         </ul>
                     </div>
-                    <div class="bg-[#112240] p-6 rounded-lg shadow-lg">
-                        <h3 class="text-2xl font-bold text-blue-400 mb-4">Backend & Databases</h3>
+                    <div class="glass-effect p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Backend & Databases</h3>
                         <ul class="space-y-2">
                             <li>Node.js (NestJS, Express)</li>
                             <li>Python (FastAPI, Django)</li>
-                            <li>Java (Spring)</li>
-                            <li>PostgreSQL, MongoDB, SQL/NoSQL</li>
+                            <li>PostgreSQL, MongoDB</li>
                         </ul>
                     </div>
-                    <div class="bg-[#112240] p-6 rounded-lg shadow-lg">
-                        <h3 class="text-2xl font-bold text-blue-400 mb-4">AI / Machine Learning</h3>
+                    <div class="glass-effect p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">AI/ML</h3>
                         <ul class="space-y-2">
                             <li>Conversational & Voice AI</li>
                             <li>PyTorch & Hugging Face</li>
                             <li>Azure Cognitive Services</li>
-                            <li>Natural Language Processing</li>
                         </ul>
                     </div>
-                    <div class="bg-[#112240] p-6 rounded-lg shadow-lg">
-                        <h3 class="text-2xl font-bold text-blue-400 mb-4">Cloud & DevOps</h3>
+                    <div class="glass-effect p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Cloud & DevOps</h3>
                         <ul class="space-y-2">
                             <li>Azure, AWS, GCP</li>
-                            <li>Docker, Kubernetes (AKS, EKS)</li>
-                            <li>CI/CD (Azure DevOps, GitHub Actions)</li>
-                            <li>Terraform, Pulumi, Ansible</li>
+                            <li>Docker, Kubernetes</li>
+                            <li>CI/CD, Terraform</li>
                         </ul>
                     </div>
                 </div>
             </section>
+
             <section id="projects" class="py-20">
-                <h2 class="text-4xl font-bold text-white text-center mb-12">Featured Projects</h2>
+                <h2 class="text-4xl font-bold text-white text-center mb-12">// Caught in the Web</h2>
                 <div class="space-y-12 max-w-4xl mx-auto">
-                    <div class="bg-[#112240] p-8 rounded-lg shadow-lg">
-                        <h3 class="text-3xl font-bold text-blue-400 mb-2">AI Reservation & Review Automation Platform</h3>
-                        <p class="mb-4">As a Founding Engineer at Troy AI, I built an AI-powered platform from scratch to help restaurants automate customer engagement, review management, and reservation workflows.</p>
-                        <div class="mb-4">
-                            <h4 class="font-bold text-white">Challenge:</h4>
-                            <p>Large-scale review ingestion during onboarding caused performance bottlenecks due to synchronous processing.</p>
-                        </div>
-                        <div class="mb-4">
-                            <h4 class="font-bold text-white">Solution & Impact:</h4>
-                            <p>Redesigned the system into an event-driven architecture using AWS Lambda with retries and dead-letter queues. This reduced onboarding latency and dramatically improved scalability and reliability for future AI workflows.</p>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-blue-900 text-blue-300 px-2 py-1 text-sm rounded-full">React</span>
-                            <span class="bg-blue-900 text-blue-300 px-2 py-1 text-sm rounded-full">Python (FastAPI)</span>
-                            <span class="bg-blue-900 text-blue-300 px-2 py-1 text-sm rounded-full">AWS Lambda</span>
-                            <span class="bg-blue-900 text-blue-300 px-2 py-1 text-sm rounded-full">OpenAI</span>
+                    <div class="glass-effect p-8 rounded-lg">
+                        <h3 class="text-3xl font-bold text-cyan-400 mb-2">AI Reservation & Review Automation</h3>
+                        <p>An AI-powered platform to help restaurants automate customer engagement, review management, and reservation workflows.</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Python (FastAPI)</span>
+                            <span class="tech-tag">AWS Lambda</span>
                         </div>
                     </div>
-                    <div class="bg-[#112240] p-8 rounded-lg shadow-lg">
-                        <h3 class="text-3xl font-bold text-blue-400 mb-2">Healthcare Identity & Data Workspace System</h3>
-                        <p class="mb-4">As a Full-Stack Engineer, I built microservices for healthcare data onboarding, identity management, and secure analytics environments on GCP.</p>
-                        <div class="mb-4">
-                            <h4 class="font-bold text-white">Challenge:</h4>
-                            <p>Clients needed a secure, isolated environment to analyze purchased healthcare datasets, and the platform lacked a reliable way to restore individual database tables after failed migrations.</p>
-                        </div>
-                        <div class="mb-4">
-                            <h4 class="font-bold text-white">Solution & Impact:</h4>
-                            <p>I built an automated VM provisioning workflow with dynamic Jupyter environments and role-based dataset access. I also engineered a custom table-level backup and restore pipeline, which improved migration safety and significantly reduced recovery time.</p>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-blue-900 text-blue-300 px-2 py-1 text-sm rounded-full">React</span>
-                            <span class="bg-blue-900 text-blue-300 px-2 py-1 text-sm rounded-full">Python (Django)</span>
-                            <span class="bg-blue-900 text-blue-300 px-2 py-1 text-sm rounded-full">GCP</span>
-                            <span class="bg-blue-900 text-blue-300 px-2 py-1 text-sm rounded-full">IAM</span>
+                    <div class="glass-effect p-8 rounded-lg">
+                        <h3 class="text-3xl font-bold text-cyan-400 mb-2">Healthcare Identity & Data Workspace</h3>
+                        <p>Microservices for healthcare data onboarding, identity management, and secure analytics environments on GCP.</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                           <span class="tech-tag">React</span>
+                           <span class="tech-tag">Python (Django)</span>
+                           <span class="tech-tag">GCP</span>
                         </div>
                     </div>
                 </div>
             </section>
-             <section id="blog" class="py-20">
-                <h2 class="text-4xl font-bold text-white text-center mb-12">Case Studies & Articles</h2>
-                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-[#112240] p-8 rounded-lg shadow-lg flex flex-col">
-                        <h3 class="text-2xl font-bold text-blue-400 mb-4">From Bottleneck to Scale: Architecting an Event-Driven AI Platform on AWS</h3>
-                        <p class="flex-grow">A technical deep dive into the Troy AI reservation and review automation platform, exploring the shift from a synchronous API to a resilient, event-driven architecture.</p>
-                        <a href="case-study-troy-ai.html" class="mt-6 text-lg text-blue-400 hover:text-blue-500 font-bold self-start">Read More &rarr;</a>
-                    </div>
-                    <div class="bg-[#112240] p-8 rounded-lg shadow-lg flex flex-col">
-                        <h3 class="text-2xl font-bold text-blue-400 mb-4">Building for Trust: Secure Data Workspaces & Custom Recovery on GCP</h3>
-                        <p class="flex-grow">A deep dive into engineering reliable and secure data solutions for a healthcare platform, focusing on automated provisioning and custom database recovery pipelines.</p>
-                        <a href="case-study-healthcare-platform.html" class="mt-6 text-lg text-blue-400 hover:text-blue-500 font-bold self-start">Read More &rarr;</a>
-                    </div>
-                </div>
-            </section>
+
             <section id="experience" class="py-20">
-                <h2 class="text-4xl font-bold text-white text-center mb-12">Experience</h2>
-                <div class="space-y-8 max-w-4xl mx-auto">
-                    <div class="bg-[#112240] p-8 rounded-lg shadow-lg">
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline mb-2">
-                            <h3 class="text-3xl font-bold text-blue-400">Founding Engineer</h3>
-                            <span class="text-gray-400 mt-1 sm:mt-0">June 2024 – Present</span>
-                        </div>
-                        <h4 class="text-2xl font-semibold text-white mb-4">Troy AI</h4>
-                        <ul class="list-disc list-inside space-y-2">
-                            <li>Architecting and deploying production-grade conversational Voice AI systems for voice and chat.</li>
-                            <li>Building a full reservation management platform with real-time availability, tightly integrated with AI assistants.</li>
-                            <li>See the detailed case study in the Featured Projects and Blog sections.</li>
-                        </ul>
+                <h2 class="text-4xl font-bold text-white text-center mb-12">// The Descending Silk Thread</h2>
+                <div class="space-y-8 max-w-4xl mx-auto relative silk-thread-line">
+                    <div class="glass-effect p-8 rounded-lg timeline-item">
+                        <h3 class="text-2xl font-bold text-cyan-400">Founding Engineer</h3>
+                        <h4 class="text-xl font-semibold text-white mb-2">Troy AI</h4>
+                        <span class="text-gray-400">June 2024 – Present</span>
                     </div>
-                    <div class="bg-[#112240] p-8 rounded-lg shadow-lg">
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline mb-2">
-                            <h3 class="text-3xl font-bold text-blue-400">Senior Software Engineer</h3>
-                            <span class="text-gray-400 mt-1 sm:mt-0">Sep 2022 – May 2024</span>
-                        </div>
-                        <h4 class="text-2xl font-semibold text-white mb-4">Trine</h4>
-                        <ul class="list-disc list-inside space-y-2">
-                            <li>Spearheaded development of precision medicine and cancer treatment software.</li>
-                            <li>Led architecture transitions to event-driven systems using Kafka and RabbitMQ for improved scalability.</li>
-                            <li>Implemented sophisticated security protocols including OAuth, JWT, and Okta to ensure HIPAA compliance.</li>
-                        </ul>
+                    <div class="glass-effect p-8 rounded-lg timeline-item">
+                        <h3 class="text-2xl font-bold text-cyan-400">Senior Software Engineer</h3>
+                         <h4 class="text-xl font-semibold text-white mb-2">Trine</h4>
+                        <span class="text-gray-400">Sep 2022 – May 2024</span>
                     </div>
-                    <div class="bg-[#112240] p-8 rounded-lg shadow-lg">
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline mb-2">
-                            <h3 class="text-3xl font-bold text-blue-400">Senior Software Engineer</h3>
-                            <span class="text-gray-400 mt-1 sm:mt-0">July 2019 – Aug 2022</span>
-                        </div>
-                        <h4 class="text-2xl font-semibold text-white mb-4">NetEnrich</h4>
-                        <ul class="list-disc list-inside space-y-2">
-                            <li>Designed and developed the "KNOW" and "Acton Eye" cybersecurity software solutions.</li>
-                            <li>Enhanced software architecture for threat detection and response in collaboration with security professionals.</li>
-                        </ul>
-                    </div>
-                    <div class="bg-[#112240] p-8 rounded-lg shadow-lg">
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-baseline mb-2">
-                            <h3 class="text-3xl font-bold text-blue-400">Software Developer</h3>
-                            <span class="text-gray-400 mt-1 sm:mt-0">Dec 2015 – July 2019</span>
-                        </div>
-                        <h4 class="text-2xl font-semibold text-white mb-4">Virtus IT</h4>
-                        <ul class="list-disc list-inside space-y-2">
-                            <li>Developed and maintained full-stack applications for a large-scale e-commerce platform using the MEAN stack.</li>
-                            <li>Designed and implemented RESTful APIs and GraphQL endpoints using Node.js (Express.js).</li>
-                        </ul>
+                    <div class="glass-effect p-8 rounded-lg timeline-item">
+                        <h3 class="text-2xl font-bold text-cyan-400">Senior Software Engineer</h3>
+                         <h4 class="text-xl font-semibold text-white mb-2">NetEnrich</h4>
+                        <span class="text-gray-400">July 2019 – Aug 2022</span>
                     </div>
                 </div>
             </section>
-            <section id="education" class="py-20">
-                <h2 class="text-4xl font-bold text-white text-center mb-12">Education & Certifications</h2>
-                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
-                    <div class="bg-[#112240] p-8 rounded-lg shadow-lg">
-                        <h3 class="text-2xl font-bold text-blue-400 mb-4">Education</h3>
-                        <p class="text-xl font-semibold text-white">MS in Information Studies</p>
-                        <p class="text-lg">Trine University</p>
-                        <p class="text-md text-gray-400">GPA: 3.8/4.0</p>
-                    </div>
-                    <div class="bg-[#112240] p-8 rounded-lg shadow-lg">
-                        <h3 class="text-2xl font-bold text-blue-400 mb-4">Certifications</h3>
-                        <ul class="space-y-2 text-lg">
-                            <li>Microsoft Azure Fundamentals</li>
-                            <li>Azure AI Engineer Associate</li>
-                            <li>AWS Cloud Engineer</li>
-                            <li>Data Mining and Data Visualization</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+
             <section id="contact" class="text-center py-20">
-                <h2 class="text-4xl font-bold text-white mb-4">Let's Build What's Next.</h2>
-                <p class="max-w-xl mx-auto mb-8">I'm always open to discussing new projects, creative ideas, or opportunities to be part of an ambitious team. Let's connect.</p>
-                <a href="mailto:contact@example.com" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 text-xl">Get In Touch</a>
+                <h2 class="text-4xl font-bold text-white mb-4">// Drop Me a Line</h2>
+                <p class="max-w-xl mx-auto mb-8">Have a project, an idea, or just want to connect? My web is always open.</p>
+                <a href="mailto:contact@example.com" class="contact-button">Send Signal</a>
             </section>
         </main>
-        <footer class="text-center py-8 border-t border-gray-800">
-            <p>&copy; 2026 spidy. Designed & Built with a spark of creativity.</p>
+
+        <footer class="text-center py-8 border-t border-gray-800 mt-8">
+            <p>&copy; 2026 spidy. The web was spun with code.</p>
         </footer>
     </div>
+    <script src="js/hero-animation.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

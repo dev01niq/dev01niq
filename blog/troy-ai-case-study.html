@@ -5,34 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Case Study: Architecting an Event-Driven AI Platform | spidy</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/spider-theme.css">
     <style>
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a192f; }
-        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
-        .prose-invert a { color: #3b82f6; }
+        body { font-family: 'Fira Code', monospace; }
+        .prose { color: #c5c5c5; }
+        .prose h1, .prose h2, .prose h3 { color: white; }
+        .prose a { color: #00ffff; }
+        .prose strong { color: white; }
+        .prose blockquote { border-left-color: #00ffff; }
     </style>
 </head>
-<body class="bg-[#0a192f] text-gray-300 font-sans leading-relaxed">
-    <div class="container mx-auto p-8">
-        <div class="max-w-4xl mx-auto mb-8">
-            <a href="blog.html" class="text-blue-400 hover:text-blue-500 transition-colors duration-300">&larr; Back to All Articles</a>
-        </div>
-        <header class="flex justify-between items-center mb-16">
-            <div class="text-2xl font-bold text-white tracking-wider"><a href="index.html">spidy.</a></div>
-            <nav class="hidden md:flex space-x-8 text-lg">
-                 <a href="index.html#about" class="hover:text-blue-500 transition-colors duration-300">About</a>
-                <a href="index.html#projects" class="hover:text-blue-500 transition-colors duration-300">Projects</a>
-                <a href="index.html#experience" class="hover:text-blue-500 transition-colors duration-300">Experience</a>
-                <a href="index.html#education" class="hover:text-blue-500 transition-colors duration-300">Education</a>
-                <a href="index.html#contact" class="hover:text-blue-500 transition-colors duration-300">Contact</a>
-            </nav>
-        </header>
-        <main>
-            <article class="prose prose-invert lg:prose-xl max-w-4xl mx-auto">
+<body class="bg-[#0a0a0a] text-gray-300">
+    <a href="../blog.html" class="climbing-spider-nav">
+        <div class="silk-thread"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="spider-icon"><path d="M12 6.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/><path d="M12 6.5V2"/><path d="M12 15.5V22"/><path d="m4.7 4.7 2.1 2.1"/><path d="m17.2 17.2 2.1 2.1"/><path d="m4.7 19.3 2.1-2.1"/><path d="m17.2 6.8-2.1 2.1"/><path d="M2 11h4.5"/><path d="M17.5 11H22"/></svg>
+    </a>
+    <div id="spider-web-bg"></div>
+
+    <div class="container mx-auto p-8 relative z-10">
+        <main class="max-w-4xl mx-auto">
+            <article class="prose lg:prose-xl">
                 <header class="mb-12">
-                    <h1 class="text-5xl font-bold text-white">From Bottleneck to Scale: Architecting an Event-Driven AI Platform on AWS</h1>
+                    <h1 class="text-5xl font-bold">From Bottleneck to Scale: Architecting an Event-Driven AI Platform on AWS</h1>
                     <p class="text-lg text-gray-400">A technical deep dive into the Troy AI reservation and review automation platform.</p>
                 </header>
 
@@ -67,8 +64,9 @@
                 </section>
             </article>
         </main>
+
         <footer class="text-center py-8 border-t border-gray-800 mt-16">
-            <p>&copy; 2026 spidy. Designed & Built with a spark of creativity.</p>
+            <p>&copy; 2026 spidy. The web was spun with code.</p>
         </footer>
     </div>
 </body>
