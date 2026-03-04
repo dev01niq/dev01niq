@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Semantic Search for Healthcare Records with Vertex AI | spidy</title>
+    <meta name="description" content="Practical implementation guide for semantic search on healthcare records using Vertex AI embeddings and Node.js NestJS.">
+    <link rel="canonical" href="https://spidy-portfolio-preview-1772614062.surge.sh/blog/semantic-search-vertex-ai-healthcare.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Semantic Search for Healthcare with Vertex AI (NestJS) | spidy">
+    <meta property="og:description" content="Practical implementation guide for semantic search on healthcare records using Vertex AI embeddings and Node.js NestJS.">
+    <meta property="og:url" content="https://spidy-portfolio-preview-1772614062.surge.sh/blog/semantic-search-vertex-ai-healthcare.html">
+    <meta property="og:site_name" content="spidy">
+    <meta property="og:image" content="https://spidy-portfolio-preview-1772614062.surge.sh/assets/og-default.png">
+    <meta property="twitter:image" content="https://spidy-portfolio-preview-1772614062.surge.sh/assets/og-default.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Semantic Search for Healthcare with Vertex AI (NestJS) | spidy">
+    <meta property="twitter:description" content="Practical implementation guide for semantic search on healthcare records using Vertex AI embeddings and Node.js NestJS.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Semantic Search for Healthcare Records with Vertex AI (Node.js + NestJS)",
+  "author": {"@type": "Person", "name": "spidy"},
+  "datePublished": "2026-03-04",
+  "mainEntityOfPage": "https://spidy-portfolio-preview-1772614062.surge.sh/blog/semantic-search-vertex-ai-healthcare.html"
+}
+</script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/spider-theme.css">
+    <style>
+        body { font-family: 'Fira Code', monospace; }
+        .prose { color: #c5c5c5; max-width: none; }
+        .prose h1, .prose h2, .prose h3 { color: white; }
+        .prose a { color: #00ffff; }
+        .prose strong { color: white; }
+        .prose blockquote { border-left-color: #00ffff; }
+        .code-block {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .code-block code {
+            color: #d1d5db;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            white-space: pre;
+            display: block;
+        }
+        .mini-title {
+            color: #67e8f9;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-[#0a0a0a] text-gray-300">
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <a href="../blog.html" class="climbing-spider-nav">
+        <div class="silk-thread"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="spider-icon"><path d="M12 6.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/><path d="M12 6.5V2"/><path d="M12 15.5V22"/><path d="m4.7 4.7 2.1 2.1"/><path d="m17.2 17.2 2.1 2.1"/><path d="m4.7 19.3 2.1-2.1"/><path d="m17.2 6.8-2.1 2.1"/><path d="M2 11h4.5"/><path d="M17.5 11H22"/></svg>
+    </a>
+
+    <div id="spider-web-bg"></div>
+
+    <div class="container mx-auto px-6 md:px-8 relative z-10">
+        <main class="max-w-4xl mx-auto pt-8">
+            <article class="prose lg:prose-xl">
+                <header class="mb-12">
+                    <h1 class="text-5xl font-bold text-white">Semantic Search for Healthcare Patient Records with Vertex AI (Node.js + NestJS)</h1>
+                    <p class="text-lg text-gray-400">How to build an intelligent search layer that understands medical meaning—not just keywords—while staying practical for production healthcare systems.</p>
+                    <div class="post-meta-inline mt-4 flex flex-wrap items-center gap-3 text-xs text-gray-400">
+                        <span>By <strong class="text-white">spidy</strong></span>
+                        <span>•</span>
+                        <time datetime="2026-03-04">Published: Mar 4, 2026</time>
+                        <span>•</span>
+                        <span>8 min read</span>
+                    </div>
+                </header>
+
+                <section class="mt-12">
+                    <h2>Why Semantic Search Matters in Healthcare</h2>
+                    <p>In healthcare projects, traditional keyword search often misses critical context. A doctor may search for <em>"heart attack history"</em>, while records contain terms like <em>"myocardial infarction"</em>. A strict keyword engine can fail here. Semantic search solves this by comparing <strong>meaning</strong> instead of exact wording.</p>
+                    <p>With semantic search, clinicians and operations teams can find patient records faster, reduce manual lookup effort, and improve decision quality during time-sensitive workflows.</p>
+                </section>
+
+                <section class="mt-12">
+                    <h2>Simple Architecture (Production Friendly)</h2>
+                    <ol>
+                        <li>Store patient record summaries (de-identified where needed).</li>
+                        <li>Generate embeddings using <strong>Vertex AI Embeddings</strong>.</li>
+                        <li>Store vectors in a vector store (Vertex AI Vector Search, pgvector, etc.).</li>
+                        <li>At query time, embed user query and run nearest-neighbor search.</li>
+                        <li>Return top matches + metadata (facility, date range, diagnosis tags).</li>
+                    </ol>
+                </section>
+
+                <section class="mt-12">
+                    <h2>Data Modeling Tip for Patient Records</h2>
+                    <p>Don’t embed raw EHR dumps. Create a normalized text document per searchable unit, for example:</p>
+                    <div class="code-block">
+<code>{
+  "recordId": "rec_10293",
+  "patientId": "pat_991",
+  "text": "72-year-old female, history of myocardial infarction, hypertension, type 2 diabetes, recent complaint: chest discomfort after exertion."
+}</code>
+                    </div>
+                    <p>This gives cleaner embeddings and more reliable retrieval quality.</p>
+                </section>
+
+                <section class="mt-12">
+                    <h2>NestJS Service Example: Generate Embeddings (Vertex AI)</h2>
+                    <p>Below is a minimal service pattern. In production, add retries, circuit breakers, and structured logging. Also, prefer selecting the currently recommended Vertex text embedding model for your region/environment, since model versions evolve over time.</p>
+                    <div class="mini-title">src/search/embedding.service.ts</div>
+                    <div class="code-block">
+<code>import { Injectable } from '@nestjs/common';
+import { PredictionServiceClient } from '@google-cloud/aiplatform';
+
+@Injectable()
+export class EmbeddingService {
+  private client = new PredictionServiceClient();
+
+  private projectId = process.env.GCP_PROJECT_ID!;
+  private location = process.env.GCP_REGION || 'us-central1';
+  private model = 'textembedding-gecko@003';
+
+  async embedText(text: string): Promise<number[]> {
+    const endpoint = `projects/${this.projectId}/locations/${this.location}/publishers/google/models/${this.model}`;
+
+    const [response] = await this.client.predict({
+      endpoint,
+      instances: [{ content: text } as any],
+      parameters: {} as any,
+    });
+
+    const values = response.predictions?.[0] as any;
+    return values?.embeddings?.values ?? [];
+  }
+}</code>
+                    </div>
+                </section>
+
+                <section class="mt-12">
+                    <h2>NestJS Flow: Index Patient Records</h2>
+                    <div class="mini-title">src/search/indexing.service.ts</div>
+                    <div class="code-block">
+<code>import { Injectable } from '@nestjs/common';
+import { EmbeddingService } from './embedding.service';
+
+@Injectable()
+export class IndexingService {
+  constructor(private readonly embeddingService: EmbeddingService) {}
+
+  async indexRecord(record: { recordId: string; patientId: string; text: string }) {
+    const vector = await this.embeddingService.embedText(record.text);
+
+    // pseudo-repository: save vector + metadata into vector DB
+    await this.saveVector({
+      id: record.recordId,
+      vector,
+      metadata: {
+        patientId: record.patientId,
+      },
+    });
+  }
+
+  private async saveVector(payload: any) {
+    // Implement with Vertex Vector Search / pgvector / Pinecone, etc.
+    return payload;
+  }
+}</code>
+                    </div>
+                </section>
+
+                <section class="mt-12">
+                    <h2>NestJS Flow: Query Semantic Search</h2>
+                    <div class="mini-title">src/search/search.service.ts</div>
+                    <div class="code-block">
+<code>import { Injectable } from '@nestjs/common';
+import { EmbeddingService } from './embedding.service';
+
+@Injectable()
+export class SearchService {
+  constructor(private readonly embeddingService: EmbeddingService) {}
+
+  async search(query: string, topK = 10) {
+    const queryVector = await this.embeddingService.embedText(query);
+
+    const results = await this.knnSearch({
+      vector: queryVector,
+      topK,
+      filters: {
+        // optional filters for tenancy/compliance
+        // facilityId, orgId, date ranges, etc.
+      },
+    });
+
+    return results;
+  }
+
+  private async knnSearch(payload: any) {
+    // Call your vector store and return nearest neighbors.
+    return [];
+  }
+}</code>
+                    </div>
+                </section>
+
+                <section class="mt-12">
+                    <h2>API Endpoint Example</h2>
+                    <div class="mini-title">src/search/search.controller.ts</div>
+                    <div class="code-block">
+<code>import { Body, Controller, Post } from '@nestjs/common';
+import { SearchService } from './search.service';
+
+@Controller('v1/semantic-search')
+export class SearchController {
+  constructor(private readonly searchService: SearchService) {}
+
+  @Post('patients')
+  async searchPatients(@Body() dto: { query: string; topK?: number }) {
+    return this.searchService.search(dto.query, dto.topK ?? 10);
+  }
+}</code>
+                    </div>
+                </section>
+
+                <section class="mt-12">
+                    <h2>Healthcare Guardrails You Should Not Skip</h2>
+                    <ul>
+                        <li><strong>PHI handling:</strong> Minimize PII in embedding text where possible.</li>
+                        <li><strong>Access filters:</strong> Always enforce tenant/facility-level filters in vector queries.</li>
+                        <li><strong>Auditability:</strong> Log who queried what, and when.</li>
+                        <li><strong>Prompt safety:</strong> If used with RAG, prevent leaking restricted context in generated responses.</li>
+                        <li><strong>Model fallback:</strong> Add graceful degradation if embedding service is unavailable.</li>
+                    </ul>
+                </section>
+
+                <section class="mt-12">
+                    <h2>Practical KPI Targets</h2>
+                    <p>For healthcare use-cases, measure these from day one:</p>
+                    <ul>
+                        <li><strong>Search relevance (Top-3 hit rate)</strong></li>
+                        <li><strong>Latency P95</strong> for user query to first result</li>
+                        <li><strong>Zero unauthorized retrieval incidents</strong></li>
+                        <li><strong>Reduction in manual chart lookup time</strong></li>
+                    </ul>
+                </section>
+
+                <section class="mt-12">
+                    <h2>Quick API Example (End-to-End)</h2>
+                    <div class="code-block">
+<code>curl -X POST http://localhost:3000/v1/semantic-search/patients \
+  -H "content-type: application/json" \
+  -d '{
+    "query": "history of heart attack and recent chest pain",
+    "topK": 5
+  }'</code>
+                    </div>
+                    <div class="code-block">
+<code>{
+  "results": [
+    {
+      "recordId": "rec_10293",
+      "score": 0.91,
+      "summary": "...history of myocardial infarction..."
+    }
+  ]
+}</code>
+                    </div>
+                </section>
+
+                <section class="mt-12">
+                    <h2>Common Pitfalls to Avoid</h2>
+                    <ul>
+                        <li><strong>Embedding raw PHI blindly:</strong> redact or minimize sensitive direct identifiers before indexing.</li>
+                        <li><strong>No tenant/facility filters:</strong> always apply access constraints during vector retrieval.</li>
+                        <li><strong>No audit trail:</strong> log semantic search usage for security and compliance reviews.</li>
+                        <li><strong>Ignoring relevance QA:</strong> evaluate with real clinical phrasing, not only synthetic queries.</li>
+                    </ul>
+                </section>
+
+                <section class="mt-12">
+                    <h2>Compliance Note</h2>
+                    <p>This article is for engineering education and architecture guidance. Real deployments handling patient data must align with applicable regulations (such as HIPAA/PHIPA/GDPR), internal security controls, and legal/compliance review requirements.</p>
+                </section>
+
+                <section class="mt-12">
+                    <h2>Final Thoughts</h2>
+                    <p>Semantic search with Vertex AI can be a high-impact capability for healthcare products when built with strong access controls and clean data preparation. Start simple: one embedding pipeline, one searchable patient-summary index, and clear governance. Then iterate with relevance feedback from clinicians.</p>
+                    <p>That approach gives teams a practical path from pilot to production without overengineering from day one.</p>
+                </section>
+
+                <section class="mt-16">
+                    <h2>More Articles</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                            <a href="troy-ai-case-study.html" class="glass-effect block p-5 rounded-lg hover:border-cyan-400/40 transition-all">
+                                <h3 class="text-lg font-bold text-cyan-400 mb-2">From Bottleneck to Scale: Architecting an Event-Driven AI Platform on AWS</h3>
+                                <p class="text-sm text-gray-400">Event-driven architecture lessons for AI reservation/review automation on AWS.</p>
+                            </a>
+                            <a href="gcp-data-workspaces-case-study.html" class="glass-effect block p-5 rounded-lg hover:border-cyan-400/40 transition-all">
+                                <h3 class="text-lg font-bold text-cyan-400 mb-2">Building for Trust: Secure Data Workspaces & Custom Recovery on GCP</h3>
+                                <p class="text-sm text-gray-400">Secure healthcare analytics workspaces and custom recovery workflows on GCP.</p>
+                            </a>
+                    </div>
+                    <p class="mt-6"><a href="../blog.html">← Back to all blogs</a></p>
+                </section>
+            </article>
+        </main>
+
+        <footer class="text-center py-8 border-t border-gray-800 mt-16">
+            <p class="text-xs text-gray-600 tracking-wide">&copy; 2026 spidy. The web was spun with code.</p>
+        </footer>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

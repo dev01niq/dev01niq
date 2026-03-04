@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://spidy-portfolio-preview-1772614062.surge.sh/sitemap.xml
