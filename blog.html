@@ -17,14 +17,19 @@
 </head>
 <body class="bg-[#0a0a0a] text-gray-300">
     <div id="spider-web-bg"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
 
-    <div class="container mx-auto p-8 relative z-10">
+    <div class="container mx-auto px-6 md:px-8 relative z-10">
         <header id="main-header" class="flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-white tracking-wider">[ spidy ]</a>
-            <nav>
-                <a href="blog.html" id="spider-nav-link" class="relative block">
-                    <svg id="spider-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="spider-icon"><path d="M12 6.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/><path d="M12 6.5V2"/><path d="M12 15.5V22"/><path d="m4.7 4.7 2.1 2.1"/><path d="m17.2 17.2 2.1 2.1"/><path d="m4.7 19.3 2.1-2.1"/><path d="m17.2 6.8-2.1 2.1"/><path d="M2 11h4.5"/><path d="M17.5 11H22"/></svg>
-                </a>
+            <nav class="hidden md:flex items-center space-x-7 text-sm">
+                <a href="index.html#about"      class="nav-link">./about</a>
+                <a href="index.html#tech-stack" class="nav-link">./tech</a>
+                <a href="index.html#projects"   class="nav-link">./projects</a>
+                <a href="index.html#experience" class="nav-link">./experience</a>
+                <a href="blog.html"             class="nav-link active">./blog</a>
+                <a href="index.html#contact"    class="nav-link">./contact</a>
             </nav>
         </header>
 
@@ -50,8 +55,9 @@
         </main>
 
         <footer class="text-center py-8 border-t border-gray-800 mt-8">
-            <p>&copy; 2026 spidy. The web was spun with code.</p>
+            <p class="text-xs text-gray-600 tracking-wide">&copy; 2026 spidy. The web was spun with code.</p>
         </footer>
     </div>
+    <script src="js/main.js"></script>
 </body>
 </html>

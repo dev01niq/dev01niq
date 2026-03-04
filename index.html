@@ -3,143 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>spidy | Creative Portfolio</title>
+    <title>spidy | Full Stack &amp; AI Engineer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/spider-theme.css">
-    <style>
-        body {
-            font-family: 'Fira Code', monospace;
-        }
-    </style>
+    <style>body { font-family: 'Fira Code', monospace; }</style>
 </head>
 <body class="bg-[#0a0a0a] text-gray-300">
+
+    <!-- Dot-grid background -->
     <div id="spider-web-bg"></div>
 
-    <div class="container mx-auto p-8 relative z-10">
+    <!-- Scroll progress — right-side silk thread -->
+    <div id="scroll-progress-container">
+        <div id="scroll-progress-fill"></div>
+        <div id="scroll-progress-spider">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                 fill="none" stroke="#00ffff" stroke-width="1.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 6.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/>
+                <path d="M12 6.5V2"/><path d="M12 15.5V22"/>
+                <path d="m4.7 4.7 2.1 2.1"/><path d="m17.2 17.2 2.1 2.1"/>
+                <path d="m4.7 19.3 2.1-2.1"/><path d="m17.2 6.8-2.1 2.1"/>
+                <path d="M2 11h4.5"/><path d="M17.5 11H22"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Custom cursor -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- Mobile menu overlay -->
+    <div id="mobile-menu" class="mobile-menu-overlay">
+        <button id="mobile-menu-close" class="mobile-close-btn" aria-label="Close menu">✕</button>
+        <nav class="flex flex-col items-center space-y-8">
+            <a href="#about"      class="mobile-nav-link">./about</a>
+            <a href="#tech-stack" class="mobile-nav-link">./tech</a>
+            <a href="#projects"   class="mobile-nav-link">./projects</a>
+            <a href="#experience" class="mobile-nav-link">./experience</a>
+            <a href="blog.html"   class="mobile-nav-link">./blog</a>
+            <a href="#contact"    class="mobile-nav-link">./contact</a>
+        </nav>
+    </div>
+
+    <div class="container mx-auto px-6 md:px-8 relative z-10">
+
+        <!-- Header -->
         <header id="main-header" class="flex justify-between items-center">
             <div class="text-2xl font-bold text-white tracking-wider">[ spidy ]</div>
-            <nav>
-                <a href="blog.html" id="spider-nav-link" class="relative block">
-                    <svg id="spider-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="spider-icon"><path d="M12 6.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/><path d="M12 6.5V2"/><path d="M12 15.5V22"/><path d="m4.7 4.7 2.1 2.1"/><path d="m17.2 17.2 2.1 2.1"/><path d="m4.7 19.3 2.1-2.1"/><path d="m17.2 6.8-2.1 2.1"/><path d="M2 11h4.5"/><path d="M17.5 11H22"/></svg>
-                </a>
+
+            <!-- Desktop nav -->
+            <nav class="hidden md:flex items-center space-x-7 text-sm">
+                <a href="#about"      class="nav-link" data-section="about">./about</a>
+                <a href="#tech-stack" class="nav-link" data-section="tech-stack">./tech</a>
+                <a href="#projects"   class="nav-link" data-section="projects">./projects</a>
+                <a href="#experience" class="nav-link" data-section="experience">./experience</a>
+                <a href="blog.html"   class="nav-link">./blog</a>
+                <a href="#contact"    class="nav-link" data-section="contact">./contact</a>
             </nav>
+
+            <!-- Mobile hamburger -->
+            <button id="mobile-menu-btn" class="md:hidden flex flex-col justify-center space-y-1.5 p-2 group" aria-label="Open menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
         </header>
 
         <main>
+
+            <!-- ═══ HERO ═════════════════════════════════════════ -->
             <section id="hero" class="text-center h-screen flex flex-col justify-center items-center -mt-24">
                 <canvas id="hero-animation-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
-                <div class="relative z-10">
-                    <h1 class="text-5xl md:text-7xl font-bold text-white mb-4 glitch" data-text="Code is the Web.">Code is the Web.</h1>
-                    <p class="text-xl md:text-2xl text-cyan-400">I am the spider who spins it.</p>
+                <div class="relative z-10 flex flex-col items-center">
+
+                    <!-- Status pill -->
+                    <div class="status-badge mb-6">
+                        <span class="status-dot"></span>
+                        <span class="text-xs tracking-wide">Currently Building @ Troy AI</span>
+                    </div>
+
+                    <h1 class="text-5xl md:text-7xl font-bold text-white mb-4 glitch"
+                        data-text="Code is the Web.">Code is the Web.</h1>
+
+                    <p class="text-xl md:text-2xl text-cyan-400 mb-10 h-8">
+                        <span id="hero-subtitle">I am the spider who spins it.</span><span class="typing-cursor">_</span>
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <a href="#projects" class="cta-primary">View Projects</a>
+                        <a href="#contact"  class="cta-secondary">Get In Touch</a>
+                    </div>
                 </div>
             </section>
 
+            <!-- ═══ ABOUT ════════════════════════════════════════ -->
             <section id="about" class="py-20">
-                <h2 class="text-4xl font-bold text-white text-center mb-12">// The Spider Behind the Code</h2>
-                <div class="max-w-4xl mx-auto text-center glass-effect p-8">
-                    <p class="text-lg leading-relaxed">
-                        I am a results-oriented Full Stack Engineer specializing in the design, development, and scaling of sophisticated conversational AI systems. My experience is rooted in Voice AI and leveraging LLMs to create intuitive conversation flows, all integrated seamlessly with modern telephony. I thrive in agile environments, leading teams to build high-quality, impactful products while architecting scalable, secure, and efficient microservices solutions across Azure, AWS, and GCP.
+                <h2 class="section-heading text-4xl font-bold text-white text-center mb-12">
+                    // The Spider Behind the Code
+                </h2>
+                <div class="max-w-4xl mx-auto text-center glass-effect p-10">
+                    <p class="text-base md:text-lg leading-relaxed text-gray-300">
+                        I am a results-oriented <span class="text-cyan-400 font-semibold">Full Stack Engineer</span>
+                        specialising in the design, development, and scaling of sophisticated
+                        <span class="text-cyan-400 font-semibold">conversational AI systems</span>. My experience is
+                        rooted in Voice&nbsp;AI and leveraging LLMs to create intuitive conversation flows, all
+                        integrated seamlessly with modern telephony. I thrive in agile environments, leading teams to
+                        build high-quality, impactful products while architecting scalable, secure, and efficient
+                        microservices solutions across <span class="text-cyan-400 font-semibold">Azure, AWS, and GCP</span>.
                     </p>
                 </div>
             </section>
 
+            <!-- ═══ TECH STACK ══════════════════════════════════ -->
             <section id="tech-stack" class="py-20">
-                <h2 class="text-4xl font-bold text-white text-center mb-12">// Nodes in the Web</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="glass-effect p-6 rounded-lg">
-                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Frontend & Web</h3>
+                <h2 class="section-heading text-4xl font-bold text-white text-center mb-12">
+                    // Nodes in the Web
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <div class="glass-effect p-6 rounded-lg tech-card">
+                        <h3 class="text-base font-bold text-cyan-400 mb-4 flex items-center gap-2">
+                            <span class="tech-node-icon">◈</span> Frontend
+                        </h3>
                         <ul class="space-y-2">
-                            <li>React, Next.js, Angular</li>
-                            <li>TypeScript, JavaScript</li>
-                            <li>HTML, CSS, Tailwind</li>
+                            <li class="tech-item">React &amp; Next.js</li>
+                            <li class="tech-item">Angular</li>
+                            <li class="tech-item">TypeScript</li>
+                            <li class="tech-item">Tailwind CSS</li>
                         </ul>
                     </div>
-                    <div class="glass-effect p-6 rounded-lg">
-                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Backend & Databases</h3>
+
+                    <div class="glass-effect p-6 rounded-lg tech-card">
+                        <h3 class="text-base font-bold text-cyan-400 mb-4 flex items-center gap-2">
+                            <span class="tech-node-icon">◈</span> Backend
+                        </h3>
                         <ul class="space-y-2">
-                            <li>Node.js (NestJS, Express)</li>
-                            <li>Python (FastAPI, Django)</li>
-                            <li>PostgreSQL, MongoDB</li>
+                            <li class="tech-item">Node.js / NestJS</li>
+                            <li class="tech-item">Python / FastAPI</li>
+                            <li class="tech-item">PostgreSQL</li>
+                            <li class="tech-item">MongoDB</li>
                         </ul>
                     </div>
-                    <div class="glass-effect p-6 rounded-lg">
-                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">AI/ML</h3>
+
+                    <div class="glass-effect p-6 rounded-lg tech-card">
+                        <h3 class="text-base font-bold text-cyan-400 mb-4 flex items-center gap-2">
+                            <span class="tech-node-icon">◈</span> AI / ML
+                        </h3>
                         <ul class="space-y-2">
-                            <li>Conversational & Voice AI</li>
-                            <li>PyTorch & Hugging Face</li>
-                            <li>Azure Cognitive Services</li>
+                            <li class="tech-item">Voice &amp; Conversational AI</li>
+                            <li class="tech-item">LLM Integration</li>
+                            <li class="tech-item">PyTorch &amp; HuggingFace</li>
+                            <li class="tech-item">Azure Cognitive</li>
                         </ul>
                     </div>
-                    <div class="glass-effect p-6 rounded-lg">
-                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">Cloud & DevOps</h3>
+
+                    <div class="glass-effect p-6 rounded-lg tech-card">
+                        <h3 class="text-base font-bold text-cyan-400 mb-4 flex items-center gap-2">
+                            <span class="tech-node-icon">◈</span> Cloud &amp; DevOps
+                        </h3>
                         <ul class="space-y-2">
-                            <li>Azure, AWS, GCP</li>
-                            <li>Docker, Kubernetes</li>
-                            <li>CI/CD, Terraform</li>
+                            <li class="tech-item">AWS / Azure / GCP</li>
+                            <li class="tech-item">Docker &amp; Kubernetes</li>
+                            <li class="tech-item">Terraform</li>
+                            <li class="tech-item">CI/CD Pipelines</li>
                         </ul>
                     </div>
+
                 </div>
             </section>
 
+            <!-- ═══ PROJECTS ════════════════════════════════════ -->
             <section id="projects" class="py-20">
-                <h2 class="text-4xl font-bold text-white text-center mb-12">// Caught in the Web</h2>
-                <div class="space-y-12 max-w-4xl mx-auto">
-                    <div class="glass-effect p-8 rounded-lg">
-                        <h3 class="text-3xl font-bold text-cyan-400 mb-2">AI Reservation & Review Automation</h3>
-                        <p>An AI-powered platform to help restaurants automate customer engagement, review management, and reservation workflows.</p>
-                        <div class="flex flex-wrap gap-2 mt-4">
+                <h2 class="section-heading text-4xl font-bold text-white text-center mb-12">
+                    // Caught in the Web
+                </h2>
+                <div class="space-y-10 max-w-4xl mx-auto">
+
+                    <!-- Project 1 -->
+                    <div class="glass-effect p-8 rounded-lg project-card">
+                        <div class="flex flex-wrap justify-between items-start gap-3 mb-3">
+                            <h3 class="text-2xl font-bold text-cyan-400">AI Reservation &amp; Review Automation</h3>
+                            <span class="metric-badge">~200ms avg response</span>
+                        </div>
+                        <p class="text-sm text-gray-400 leading-relaxed mb-5">
+                            An AI-powered platform to help restaurants automate customer engagement, review management,
+                            and reservation workflows via an event-driven AWS microservices architecture. Shifted
+                            onboarding from blocking API calls to async SQS pipelines, eliminating timeouts and
+                            enabling millions of reviews to be processed without data loss.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
                             <span class="tech-tag">React</span>
-                            <span class="tech-tag">Python (FastAPI)</span>
+                            <span class="tech-tag">Python / FastAPI</span>
                             <span class="tech-tag">AWS Lambda</span>
+                            <span class="tech-tag">SQS / DLQ</span>
+                            <span class="tech-tag">PostgreSQL</span>
                         </div>
+                        <a href="blog/troy-ai-case-study.html" class="read-more-link">→ Read Case Study</a>
                     </div>
-                    <div class="glass-effect p-8 rounded-lg">
-                        <h3 class="text-3xl font-bold text-cyan-400 mb-2">Healthcare Identity & Data Workspace</h3>
-                        <p>Microservices for healthcare data onboarding, identity management, and secure analytics environments on GCP.</p>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                           <span class="tech-tag">React</span>
-                           <span class="tech-tag">Python (Django)</span>
-                           <span class="tech-tag">GCP</span>
+
+                    <!-- Project 2 -->
+                    <div class="glass-effect p-8 rounded-lg project-card">
+                        <div class="flex flex-wrap justify-between items-start gap-3 mb-3">
+                            <h3 class="text-2xl font-bold text-cyan-400">Healthcare Identity &amp; Data Workspace</h3>
+                            <span class="metric-badge">90% MTTR reduction</span>
                         </div>
+                        <p class="text-sm text-gray-400 leading-relaxed mb-5">
+                            Microservices for healthcare data onboarding, RBAC-governed secure analytics environments,
+                            and a custom table-level database recovery pipeline on GCP. Each client workspace is an
+                            isolated VM with dynamic Jupyter environments — provisioned automatically and governed
+                            by strict data-segregation policies.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Python / Django</span>
+                            <span class="tech-tag">GCP / GCS</span>
+                            <span class="tech-tag">Jupyter</span>
+                            <span class="tech-tag">RBAC</span>
+                        </div>
+                        <a href="blog/gcp-data-workspaces-case-study.html" class="read-more-link">→ Read Case Study</a>
                     </div>
+
                 </div>
             </section>
 
+            <!-- ═══ EXPERIENCE ══════════════════════════════════ -->
             <section id="experience" class="py-20">
-                <h2 class="text-4xl font-bold text-white text-center mb-12">// The Descending Silk Thread</h2>
+                <h2 class="section-heading text-4xl font-bold text-white text-center mb-12">
+                    // The Descending Silk Thread
+                </h2>
                 <div class="space-y-8 max-w-4xl mx-auto relative silk-thread-line">
+
                     <div class="glass-effect p-8 rounded-lg timeline-item">
-                        <h3 class="text-2xl font-bold text-cyan-400">Founding Engineer</h3>
-                        <h4 class="text-xl font-semibold text-white mb-2">Troy AI</h4>
-                        <span class="text-gray-400">June 2024 – Present</span>
+                        <div class="timeline-dot"></div>
+                        <div class="flex flex-wrap justify-between items-start gap-2 mb-1">
+                            <h3 class="text-xl font-bold text-cyan-400">Founding Engineer</h3>
+                            <span class="timeline-date">June 2024 – Present</span>
+                        </div>
+                        <h4 class="text-lg font-semibold text-white mb-3">Troy AI</h4>
+                        <ul class="timeline-bullets">
+                            <li>Architected event-driven AI platform on AWS (SQS + Lambda + DLQ)</li>
+                            <li>Built Voice AI and LLM-powered restaurant automation from 0 → 1</li>
+                            <li>Led full-stack delivery across React, FastAPI, and PostgreSQL</li>
+                        </ul>
                     </div>
+
                     <div class="glass-effect p-8 rounded-lg timeline-item">
-                        <h3 class="text-2xl font-bold text-cyan-400">Senior Software Engineer</h3>
-                         <h4 class="text-xl font-semibold text-white mb-2">Trine</h4>
-                        <span class="text-gray-400">Sep 2022 – May 2024</span>
+                        <div class="timeline-dot"></div>
+                        <div class="flex flex-wrap justify-between items-start gap-2 mb-1">
+                            <h3 class="text-xl font-bold text-cyan-400">Senior Software Engineer</h3>
+                            <span class="timeline-date">Sep 2022 – May 2024</span>
+                        </div>
+                        <h4 class="text-lg font-semibold text-white mb-3">Trine</h4>
+                        <ul class="timeline-bullets">
+                            <li>Designed secure VM-based analytics workspace provisioning on GCP</li>
+                            <li>Engineered custom table-level DB recovery pipeline (90% MTTR reduction)</li>
+                            <li>Built RBAC-governed Jupyter environments for healthcare data scientists</li>
+                        </ul>
                     </div>
+
                     <div class="glass-effect p-8 rounded-lg timeline-item">
-                        <h3 class="text-2xl font-bold text-cyan-400">Senior Software Engineer</h3>
-                         <h4 class="text-xl font-semibold text-white mb-2">NetEnrich</h4>
-                        <span class="text-gray-400">July 2019 – Aug 2022</span>
+                        <div class="timeline-dot"></div>
+                        <div class="flex flex-wrap justify-between items-start gap-2 mb-1">
+                            <h3 class="text-xl font-bold text-cyan-400">Senior Software Engineer</h3>
+                            <span class="timeline-date">July 2019 – Aug 2022</span>
+                        </div>
+                        <h4 class="text-lg font-semibold text-white mb-3">NetEnrich</h4>
+                        <ul class="timeline-bullets">
+                            <li>Developed microservices for network intelligence platform</li>
+                            <li>Delivered full-stack features in React &amp; Node.js</li>
+                        </ul>
                     </div>
+
                 </div>
             </section>
 
+            <!-- ═══ CONTACT ══════════════════════════════════════ -->
             <section id="contact" class="text-center py-20">
-                <h2 class="text-4xl font-bold text-white mb-4">// Drop Me a Line</h2>
-                <p class="max-w-xl mx-auto mb-8">Have a project, an idea, or just want to connect? My web is always open.</p>
+                <h2 class="section-heading text-4xl font-bold text-white mb-4">
+                    // Drop Me a Line
+                </h2>
+                <p class="max-w-lg mx-auto mb-8 text-gray-400 leading-relaxed">
+                    Have a project, an idea, or just want to connect?<br>
+                    My web is always open.
+                </p>
                 <a href="mailto:contact@example.com" class="contact-button">Send Signal</a>
+
+                <div class="flex justify-center gap-8 mt-12">
+                    <a href="#" class="social-link" aria-label="GitHub">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="1.5"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                        </svg>
+                        <span class="text-xs">GitHub</span>
+                    </a>
+                    <a href="#" class="social-link" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="1.5"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                            <rect x="2" y="9" width="4" height="12"/>
+                            <circle cx="4" cy="4" r="2"/>
+                        </svg>
+                        <span class="text-xs">LinkedIn</span>
+                    </a>
+                </div>
             </section>
+
         </main>
 
         <footer class="text-center py-8 border-t border-gray-800 mt-8">
-            <p>&copy; 2026 spidy. The web was spun with code.</p>
+            <p class="text-xs text-gray-600 tracking-wide">&copy; 2026 spidy. The web was spun with code.</p>
         </footer>
+
     </div>
+
     <script src="js/hero-animation.js"></script>
     <script src="js/main.js"></script>
 </body>

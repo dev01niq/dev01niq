@@ -353,3 +353,457 @@ body:has(#main-header) {
   90% { transform: skew(0deg); }
   100% { transform: skew(2deg); }
 }
+
+/* ═══════════════════════════════════════════════════════
+   ENHANCED UX/UI — Spider-Man + Full-Stack Engineer Theme
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Full Nav Links ─────────────────────────────────── */
+.nav-link {
+    color: #6b7280;
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 3px;
+    transition: color 0.25s ease;
+    letter-spacing: 0.3px;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #00ffff;
+    box-shadow: 0 0 5px #00ffff;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #00ffff;
+    text-shadow: 0 0 8px rgba(0,255,255,0.4);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* ── Section Heading decoration ─────────────────────── */
+.section-heading {
+    display: block;
+    letter-spacing: -0.5px;
+}
+
+/* ── Scroll Progress — right-side silk thread ────────── */
+#scroll-progress-container {
+    position: fixed;
+    right: 14px;
+    top: 0;
+    width: 2px;
+    height: 100vh;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
+
+#scroll-progress-fill {
+    width: 1.5px;
+    height: 0%;
+    background: linear-gradient(to bottom,
+        rgba(0,255,255,0.9),
+        rgba(0,255,255,0.3));
+    box-shadow: 0 0 6px rgba(0,255,255,0.5);
+    transition: height 0.08s linear;
+    flex-shrink: 0;
+}
+
+#scroll-progress-spider {
+    position: absolute;
+    right: -6px;
+    top: 0;
+    transition: top 0.08s linear;
+    opacity: 0.85;
+}
+
+/* ── Custom Cursor ───────────────────────────────────── */
+@media (pointer: fine) {
+    body { cursor: none; }
+    a, button { cursor: none; }
+}
+
+#cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00ffff;
+    box-shadow: 0 0 10px #00ffff, 0 0 20px rgba(0,255,255,0.3);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+    transition: width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease;
+}
+
+#cursor-ring {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,255,255,0.45);
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+}
+
+#cursor-dot.cursor-hover {
+    width: 14px;
+    height: 14px;
+    box-shadow: 0 0 18px #00ffff, 0 0 35px rgba(0,255,255,0.4);
+}
+
+#cursor-ring.cursor-hover {
+    width: 46px;
+    height: 46px;
+    border-color: rgba(0,255,255,0.75);
+}
+
+@media (pointer: coarse) {
+    #cursor-dot, #cursor-ring { display: none; }
+    body { cursor: auto; }
+}
+
+/* ── CTA Buttons ─────────────────────────────────────── */
+.cta-primary {
+    display: inline-block;
+    background: rgba(0,255,255,0.08);
+    border: 1px solid #00ffff;
+    color: #00ffff;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.cta-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%,
+        rgba(0,255,255,0.18) 0%,
+        transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.cta-primary:hover::before { opacity: 1; }
+.cta-primary:hover {
+    box-shadow: 0 0 22px rgba(0,255,255,0.45),
+                0 0 45px rgba(0,255,255,0.12);
+}
+
+.cta-secondary {
+    display: inline-block;
+    border: 1px solid rgba(0,255,255,0.3);
+    color: #9ca3af;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-secondary:hover {
+    border-color: #00ffff;
+    color: #00ffff;
+    box-shadow: 0 0 14px rgba(0,255,255,0.2);
+}
+
+/* ── Status badge ────────────────────────────────────── */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,255,255,0.05);
+    border: 1px solid rgba(0,255,255,0.18);
+    padding: 5px 14px;
+    border-radius: 20px;
+    color: #9ca3af;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+    flex-shrink: 0;
+    animation: status-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+    0%, 100% { opacity: 1;   box-shadow: 0 0 5px #22c55e; }
+    50%       { opacity: 0.55; box-shadow: 0 0 12px #22c55e, 0 0 20px rgba(34,197,94,0.3); }
+}
+
+/* ── Typing cursor blink ─────────────────────────────── */
+.typing-cursor {
+    color: #00ffff;
+    animation: blink-cursor 1s step-end infinite;
+}
+
+@keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+/* ── Tech cards ──────────────────────────────────────── */
+.tech-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tech-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 35px rgba(0,255,255,0.12);
+}
+
+.tech-node-icon {
+    color: rgba(0,255,255,0.35);
+    font-size: 1.1rem;
+}
+
+.tech-item {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+    padding-left: 0;
+}
+
+.tech-item::before {
+    content: '> ';
+    color: rgba(0,255,255,0.25);
+    transition: color 0.2s ease;
+}
+
+.tech-card:hover .tech-item { color: #d1d5db; }
+.tech-card:hover .tech-item::before { color: #00ffff; }
+
+/* ── Project cards ───────────────────────────────────── */
+.project-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* "Spider-sense scan" shimmer on hover */
+.project-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(0,255,255,0.04),
+        transparent);
+    transition: left 0.65s ease;
+    pointer-events: none;
+}
+
+.project-card:hover::after { left: 130%; }
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 45px rgba(0,255,255,0.1);
+}
+
+/* ── Metric badge ────────────────────────────────────── */
+.metric-badge {
+    background: rgba(0,255,255,0.07);
+    border: 1px solid rgba(0,255,255,0.25);
+    color: #22d3ee;
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    letter-spacing: 0.4px;
+}
+
+/* ── Read-more link ──────────────────────────────────── */
+.read-more-link {
+    display: inline-block;
+    color: rgba(0,255,255,0.65);
+    font-size: 0.82rem;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,255,255,0.2);
+    padding-bottom: 1px;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease, border-color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.read-more-link:hover {
+    color: #00ffff;
+    border-color: #00ffff;
+    text-shadow: 0 0 8px rgba(0,255,255,0.4);
+}
+
+/* ── Timeline dots ───────────────────────────────────── */
+.timeline-item { position: relative; }
+
+.timeline-dot {
+    position: absolute;
+    left: -8px;
+    top: 2.2rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #0a0a0a;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 8px rgba(0,255,255,0.35);
+    z-index: 2;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-item:hover .timeline-dot {
+    background: rgba(0,255,255,0.18);
+    box-shadow: 0 0 18px rgba(0,255,255,0.65);
+}
+
+.timeline-date {
+    font-size: 0.72rem;
+    color: #4b5563;
+    font-family: 'Fira Code', monospace;
+}
+
+.timeline-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.8rem;
+    color: #6b7280;
+    space-y: 4px;
+}
+
+.timeline-bullets li {
+    padding: 2px 0;
+    transition: color 0.2s ease;
+}
+
+.timeline-bullets li::before {
+    content: '→ ';
+    color: rgba(0,255,255,0.3);
+}
+
+.timeline-item:hover .timeline-bullets li { color: #9ca3af; }
+.timeline-item:hover .timeline-bullets li::before { color: #00ffff; }
+
+/* ── Social links ────────────────────────────────────── */
+.social-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: #4b5563;
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 6px;
+}
+
+.social-link:hover {
+    color: #00ffff;
+    transform: translateY(-4px);
+}
+
+.social-link svg {
+    transition: filter 0.3s ease;
+}
+
+.social-link:hover svg {
+    filter: drop-shadow(0 0 6px #00ffff);
+}
+
+/* ── Mobile menu overlay ─────────────────────────────── */
+.mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 18, 0.97);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.mobile-close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    color: #00ffff;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: none;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    font-family: 'Fira Code', monospace;
+}
+
+.mobile-close-btn:hover { opacity: 1; }
+
+.mobile-nav-link {
+    color: #6b7280;
+    text-decoration: none;
+    font-family: 'Fira Code', monospace;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.mobile-nav-link:hover {
+    color: #00ffff;
+    text-shadow: 0 0 15px rgba(0,255,255,0.55);
+}
+
+/* ── Hamburger ───────────────────────────────────────── */
+.hamburger-line {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: #6b7280;
+    border-radius: 1px;
+    transition: background 0.25s ease;
+}
+
+#mobile-menu-btn:hover .hamburger-line { background: #00ffff; }
+
+/* ── Responsive tweaks ───────────────────────────────── */
+@media (max-width: 768px) {
+    #scroll-progress-container { right: 5px; }
+    .silk-thread-line::before  { left: -4px; }
+}
