@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Build a Simple App with Amazon Bedrock | spidy</title>
+    <meta name="description" content="Step-by-step guide to set up Amazon Bedrock and build a simple AI app with Node.js.">
+    <link rel="canonical" href="https://spidy-portfolio-preview-1772614062.surge.sh/blog/amazon-bedrock-quickstart-simple-app.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to Build a Simple App with Amazon Bedrock | spidy">
+    <meta property="og:description" content="A practical quickstart to set up Amazon Bedrock and ship your first AI app.">
+    <meta property="og:url" content="https://spidy-portfolio-preview-1772614062.surge.sh/blog/amazon-bedrock-quickstart-simple-app.html">
+    <meta property="og:site_name" content="spidy">
+    <meta property="og:image" content="https://spidy-portfolio-preview-1772614062.surge.sh/assets/og-default.png">
+    <meta property="twitter:image" content="https://spidy-portfolio-preview-1772614062.surge.sh/assets/og-default.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="How to Build a Simple App with Amazon Bedrock | spidy">
+    <meta property="twitter:description" content="A practical quickstart to set up Amazon Bedrock and ship your first AI app.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to Set Up Amazon Bedrock and Build a Simple App",
+  "author": {"@type": "Person", "name": "spidy"},
+  "datePublished": "2026-03-18",
+  "mainEntityOfPage": "https://spidy-portfolio-preview-1772614062.surge.sh/blog/amazon-bedrock-quickstart-simple-app.html"
+}
+</script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/spider-theme.css">
+    <style>
+        body { font-family: 'Fira Code', monospace; }
+        .prose { color: #c5c5c5; max-width: none; }
+        .prose h1, .prose h2, .prose h3 { color: white; }
+        .prose a { color: #00ffff; }
+        .prose strong { color: white; }
+        .prose blockquote { border-left-color: #00ffff; }
+        .code-block {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .code-block code {
+            color: #d1d5db;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            white-space: pre;
+            display: block;
+        }
+        .mini-title {
+            color: #67e8f9;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-[#0a0a0a] text-gray-300">
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <a href="../blog.html" class="climbing-spider-nav">
+        <div class="silk-thread"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="spider-icon"><path d="M12 6.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9z"/><path d="M12 6.5V2"/><path d="M12 15.5V22"/><path d="m4.7 4.7 2.1 2.1"/><path d="m17.2 17.2 2.1 2.1"/><path d="m4.7 19.3 2.1-2.1"/><path d="m17.2 6.8-2.1 2.1"/><path d="M2 11h4.5"/><path d="M17.5 11H22"/></svg>
+    </a>
+
+    <div id="spider-web-bg"></div>
+
+    <div class="container mx-auto px-6 md:px-8 relative z-10">
+        <main class="max-w-4xl mx-auto pt-8">
+            <article class="prose lg:prose-xl">
+                <header class="mb-12">
+                    <h1 class="text-5xl font-bold text-white">How to Set Up Amazon Bedrock and Build a Simple App</h1>
+                    <p class="text-lg text-gray-400">A practical guide for shipping your first Bedrock-powered app in under an hour.</p>
+                    <div class="post-meta-inline mt-4 flex flex-wrap items-center gap-3 text-xs text-gray-400">
+                        <span>By <strong class="text-white">spidy</strong></span>
+                        <span>•</span>
+                        <time datetime="2026-03-18">Published: Mar 18, 2026</time>
+                        <span>•</span>
+                        <span>7 min read</span>
+                    </div>
+                </header>
+
+                <section class="mt-12">
+                    <h2>Why Amazon Bedrock?</h2>
+                    <p>Amazon Bedrock gives you a managed way to use foundation models without managing model infrastructure. You can start with text generation quickly, then grow into guardrails, knowledge bases, and agentic workflows as your use case matures.</p>
+                </section>
+
+                <section class="mt-12">
+                    <h2>What We’ll Build</h2>
+                    <p>A small <strong>Prompt Rewriter</strong> web app:</p>
+                    <ul>
+                        <li>User enters rough text</li>
+                        <li>App calls Bedrock</li>
+                        <li>Returns a polished version for email/interview/professional communication</li>
+                    </ul>
+                </section>
+
+                <section class="mt-12">
+                    <h2>1) Bedrock Setup (AWS Console)</h2>
+                    <ol>
+                        <li>Open AWS Console → <strong>Amazon Bedrock</strong>.</li>
+                        <li>Choose a supported region (for example <code>us-east-1</code>).</li>
+                        <li>In <strong>Model access</strong>, request access to at least one text model (e.g. Claude family).</li>
+                        <li>Create/choose IAM user or role with Bedrock permissions.</li>
+                    </ol>
+
+                    <div class="mini-title">Minimum IAM policy actions</div>
+                    <div class="code-block">
+<code>{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+      ],
+      "Resource": "*"
+    }
+  ]
+}</code>
+                    </div>
+                </section>
+
+                <section class="mt-12">
+                    <h2>2) Local Project Setup (Node.js)</h2>
+                    <div class="code-block">
+<code>mkdir bedrock-prompt-rewriter
+cd bedrock-prompt-rewriter
+npm init -y
+npm install @aws-sdk/client-bedrock-runtime express dotenv
+</code>
+                    </div>
+
+                    <div class="mini-title">.env</div>
+                    <div class="code-block">
+<code>AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=YOUR_KEY
+AWS_SECRET_ACCESS_KEY=YOUR_SECRET
+BEDROCK_MODEL_ID=anthropic.claude-3-haiku-20240307-v1:0
+PORT=3000</code>
+                    </div>
+                </section>
+
+                <section class="mt-12">
+                    <h2>3) Backend API with Bedrock</h2>
+                    <div class="mini-title">server.js</div>
+                    <div class="code-block">
+<code>require('dotenv').config();
+const express = require('express');
+const { BedrockRuntimeClient, InvokeModelCommand } = require('@aws-sdk/client-bedrock-runtime');
+
+const app = express();
+app.use(express.json());
+
+const client = new BedrockRuntimeClient({ region: process.env.AWS_REGION });
+
+app.post('/rewrite', async (req, res) => {
+  try {
+    const { text } = req.body;
+    if (!text) return res.status(400).json({ error: 'text is required' });
+
+    const prompt = `Rewrite this text in a professional and concise way:\n\n${text}`;
+
+    const body = JSON.stringify({
+      anthropic_version: 'bedrock-2023-05-31',
+      max_tokens: 300,
+      messages: [{ role: 'user', content: [{ type: 'text', text: prompt }] }]
+    });
+
+    const command = new InvokeModelCommand({
+      modelId: process.env.BEDROCK_MODEL_ID,
+      contentType: 'application/json',
+      accept: 'application/json',
+      body
+    });
+
+    const response = await client.send(command);
+    const decoded = JSON.parse(new TextDecoder().decode(response.body));
+    const output = decoded?.content?.[0]?.text || 'No response';
+
+    res.json({ output });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Bedrock call failed' });
+  }
+});
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log('Server running on port', process.env.PORT || 3000);
+});</code>
+                    </div>
+                </section>
+
+                <section class="mt-12">
+                    <h2>4) Tiny Frontend (Optional)</h2>
+                    <div class="mini-title">index.html</div>
+                    <div class="code-block">
+<code>&lt;textarea id="input" rows="7" placeholder="Paste rough text..."&gt;&lt;/textarea&gt;
+&lt;button onclick="rewrite()"&gt;Rewrite&lt;/button&gt;
+&lt;pre id="out"&gt;&lt;/pre&gt;
+
+&lt;script&gt;
+  async function rewrite() {
+    const text = document.getElementById('input').value;
+    const res = await fetch('/rewrite', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text })
+    });
+    const data = await res.json();
+    document.getElementById('out').textContent = data.output || data.error;
+  }
+&lt;/script&gt;</code>
+                    </div>
+                </section>
+
+                <section class="mt-12">
+                    <h2>5) Run It</h2>
+                    <div class="code-block">
+<code>node server.js
+# open http://localhost:3000</code>
+                    </div>
+                    <p>Now type rough content and test the rewrite API. You’ve built a real Bedrock app.</p>
+                </section>
+
+                <section class="mt-12">
+                    <h2>Production Tips</h2>
+                    <ul>
+                        <li><strong>Don’t expose keys in frontend</strong> — keep Bedrock calls server-side.</li>
+                        <li><strong>Add request limits</strong> to protect from abuse and cost spikes.</li>
+                        <li><strong>Log model latency + token usage</strong> to monitor cost/perf.</li>
+                        <li><strong>Add guardrails</strong> for harmful/off-topic outputs before showing users.</li>
+                        <li><strong>Use model fallbacks</strong> for reliability during regional/model issues.</li>
+                    </ul>
+                </section>
+
+                <section class="mt-12">
+                    <h2>Common Errors and Fixes</h2>
+                    <ul>
+                        <li><strong>AccessDeniedException:</strong> model access not approved or IAM policy missing.</li>
+                        <li><strong>ValidationException:</strong> body format doesn’t match model schema.</li>
+                        <li><strong>Region mismatch:</strong> model access enabled in one region, app calling another.</li>
+                    </ul>
+                </section>
+
+                <section class="mt-12">
+                    <h2>Final Thought</h2>
+                    <p>Start with one focused workflow like rewriting, summarization, or classification. Once stable, expand into knowledge bases, guardrails, and eventually agentic capabilities. Bedrock makes this progression clean and enterprise-friendly.</p>
+                </section>
+
+                <section class="mt-16">
+                    <h2>More Articles</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <a href="semantic-search-vertex-ai-healthcare.html" class="glass-effect block p-5 rounded-lg hover:border-cyan-400/40 transition-all">
+                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Semantic Search for Healthcare with Vertex AI (NestJS)</h3>
+                            <p class="text-sm text-gray-400">A practical production approach to semantic retrieval in healthcare workflows.</p>
+                        </a>
+                        <a href="troy-ai-case-study.html" class="glass-effect block p-5 rounded-lg hover:border-cyan-400/40 transition-all">
+                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Architecting an Event-Driven AI Platform on AWS</h3>
+                            <p class="text-sm text-gray-400">Lessons learned from scaling an AI automation platform.</p>
+                        </a>
+                    </div>
+                    <p class="mt-6"><a href="../blog.html">← Back to all blogs</a></p>
+                </section>
+            </article>
+        </main>
+
+        <footer class="text-center py-8 border-t border-gray-800 mt-16">
+            <p class="text-xs text-gray-600 tracking-wide">&copy; 2026 spidy. The web was spun with code.</p>
+        </footer>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
