@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Bedrock Agentic Flow: Real-World Design Guide | spidy</title>
+    <meta name="description" content="Deep dive into agentic system design on AWS Bedrock with a real production-style customer support use case.">
+    <link rel="canonical" href="https://spidy-portfolio-preview-1772614062.surge.sh/blog/aws-bedrock-agentic-flow-real-use-case.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AWS Bedrock Agentic Flow: Real-World Design Guide | spidy">
+    <meta property="og:description" content="How to architect Bedrock agents, tools, memory, and orchestration using a practical production use case.">
+    <meta property="og:url" content="https://spidy-portfolio-preview-1772614062.surge.sh/blog/aws-bedrock-agentic-flow-real-use-case.html">
+    <meta property="og:site_name" content="spidy">
+    <meta property="og:image" content="https://spidy-portfolio-preview-1772614062.surge.sh/assets/og-default.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="AWS Bedrock Agentic Flow: Real-World Design Guide | spidy">
+    <meta property="twitter:description" content="How to architect Bedrock agents, tools, memory, and orchestration using a practical production use case.">
+    <meta property="twitter:image" content="https://spidy-portfolio-preview-1772614062.surge.sh/assets/og-default.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/spider-theme.css">
+    <style>
+        body { font-family: 'Fira Code', monospace; }
+        .prose { color: #c5c5c5; max-width: none; }
+        .prose h1, .prose h2, .prose h3 { color: white; }
+        .prose a { color: #00ffff; }
+        .prose strong { color: white; }
+        .code-block {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .code-block code {
+            color: #d1d5db;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            white-space: pre;
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-[#0a0a0a] text-gray-300">
+<div id="cursor-dot"></div><div id="cursor-ring"></div>
+<a href="../blog.html" class="climbing-spider-nav"><div class="silk-thread"></div></a>
+<div id="spider-web-bg"></div>
+
+<div class="container mx-auto px-6 md:px-8 relative z-10">
+<main class="max-w-4xl mx-auto pt-8">
+<article class="prose lg:prose-xl">
+<header class="mb-12">
+    <h1 class="text-5xl font-bold text-white">AWS Bedrock Agentic Flow: Real Use Case + Architecture</h1>
+    <p class="text-lg text-gray-400">A practical way to demonstrate deep understanding of agents, orchestration, tools, memory, and safety in production.</p>
+    <div class="post-meta-inline mt-4 flex flex-wrap items-center gap-3 text-xs text-gray-400">
+        <span>By <strong class="text-white">spidy</strong></span><span>•</span>
+        <time datetime="2026-03-19">Published: Mar 19, 2026</time><span>•</span>
+        <span>10 min read</span>
+    </div>
+</header>
+
+<section>
+<h2>The Real Use Case: Telecom Customer Support Resolution Agent</h2>
+<p>Imagine a telecom company handling thousands of tickets daily. Customers ask for billing clarification, network troubleshooting, plan upgrades, and refund decisions. Human agents are overloaded, SLAs are missed, and resolution quality is inconsistent.</p>
+<p>An <strong>agentic flow</strong> with Amazon Bedrock can reduce response time while keeping humans in control for risky actions.</p>
+</section>
+
+<section class="mt-12">
+<h2>What “Agentic” Means in This Context</h2>
+<p>This is not just prompt in → answer out. A real agentic system performs a loop:</p>
+<ol>
+<li><strong>Understand intent</strong> (classify issue)</li>
+<li><strong>Plan steps</strong> (what data/tools are needed)</li>
+<li><strong>Call tools</strong> (CRM API, billing API, network diagnostics)</li>
+<li><strong>Reason over results</strong> (cross-check evidence)</li>
+<li><strong>Decide action</strong> (suggest/refund/escalate)</li>
+<li><strong>Apply policy + guardrails</strong></li>
+<li><strong>Execute or escalate</strong></li>
+<li><strong>Write memory/audit trail</strong></li>
+</ol>
+</section>
+
+<section class="mt-12">
+<h2>High-Level Bedrock-Centered Architecture</h2>
+<div class="code-block"><code>[Web/Chat UI]
+   -> [API Gateway]
+   -> [Orchestrator Service (Node.js/NestJS)]
+      -> [Bedrock FM / Bedrock Agent]
+      -> [Tool Layer]
+          - CRM Tool
+          - Billing Tool
+          - Diagnostics Tool
+          - Policy Check Tool
+      -> [Memory Store]
+          - short-term conversation state
+          - long-term customer profile summary
+      -> [Decision Engine]
+          - risk scoring
+          - approval routing
+      -> [Audit/Event Store]</code></div>
+</section>
+
+<section class="mt-12">
+<h2>Agentic Flow (Step-by-Step)</h2>
+<h3>1) Intake + Intent Detection</h3>
+<p>Customer says: “Internet has dropped 4 times this week and I was overcharged. I want a refund.”</p>
+<p>Agent extracts:</p>
+<ul>
+<li>Issue A: network reliability</li>
+<li>Issue B: billing dispute</li>
+<li>Requested action: refund</li>
+</ul>
+
+<h3>2) Plan Generation</h3>
+<p>Agent proposes plan:</p>
+<ol>
+<li>Get account and recent incidents</li>
+<li>Run line diagnostics</li>
+<li>Check billing events and contract terms</li>
+<li>Determine refund eligibility</li>
+<li>Draft customer response</li>
+</ol>
+
+<h3>3) Tool Execution</h3>
+<p>The model calls controlled tools one by one. Each tool result is structured JSON, not free text.</p>
+
+<h3>4) Reason + Verify</h3>
+<p>Agent verifies whether evidence supports refund. If diagnostics show repeated failures and billing mismatch exists, confidence rises.</p>
+
+<h3>5) Risk-Aware Decision</h3>
+<ul>
+<li>Low risk: provide explanation + troubleshooting steps</li>
+<li>Medium risk: propose limited credit within policy</li>
+<li>High risk: large refund / account-level changes → human approval</li>
+</ul>
+
+<h3>6) Final Response + Next Action</h3>
+<p>Agent returns a professional response plus machine-action payload (e.g., <code>request_credit</code>) if approved.</p>
+</section>
+
+<section class="mt-12">
+<h2>Why This Shows Deep Agentic Understanding</h2>
+<ul>
+<li>You separate <strong>reasoning</strong> from <strong>execution</strong>.</li>
+<li>You use tools with typed contracts (deterministic interfaces).</li>
+<li>You apply policy gates before external side effects.</li>
+<li>You maintain memory scopes (session vs profile).</li>
+<li>You keep humans in loop for high-impact actions.</li>
+</ul>
+</section>
+
+<section class="mt-12">
+<h2>Pseudo Orchestrator Logic</h2>
+<div class="code-block"><code>async function handleCustomerTicket(input) {
+  const intent = await agent.classifyIntent(input);
+  const plan = await agent.plan(intent);
+
+  const evidence = [];
+  for (const step of plan.steps) {
+    if (step.type === 'tool_call') {
+      const result = await callTool(step.toolName, step.args);
+      evidence.push({ tool: step.toolName, result });
+    }
+  }
+
+  const decision = await agent.reasonAndDecide({ intent, evidence });
+
+  const risk = scoreRisk(decision);
+  if (risk === 'high') {
+    return routeForHumanApproval(decision, evidence);
+  }
+
+  await persistAudit({ input, plan, evidence, decision, risk });
+  return executeSafeAction(decision);
+}</code></div>
+</section>
+
+<section class="mt-12">
+<h2>Memory Design: The Practical Version</h2>
+<ul>
+<li><strong>Ephemeral memory:</strong> current conversation state, temporary facts.</li>
+<li><strong>Durable memory:</strong> customer preferences, previous dispute outcomes, service history summaries.</li>
+<li><strong>Do not store everything:</strong> summarize and compress; avoid raw sensitive dumps.</li>
+</ul>
+</section>
+
+<section class="mt-12">
+<h2>Safety + Governance (Critical in Agentic Systems)</h2>
+<ul>
+<li>Tool allowlists by intent/risk</li>
+<li>Policy-driven action constraints (refund cap, role checks)</li>
+<li>PII redaction before model calls where possible</li>
+<li>Complete audit trace: prompt, plan, tools, decision, actor</li>
+<li>Fallback strategy when model/tool fails</li>
+</ul>
+</section>
+
+<section class="mt-12">
+<h2>KPIs You Should Track</h2>
+<ul>
+<li>First response time (FRT)</li>
+<li>Mean time to resolution (MTTR)</li>
+<li>Auto-resolution rate</li>
+<li>Escalation precision (high-risk actions correctly escalated)</li>
+<li>Customer satisfaction delta</li>
+<li>Cost per resolved ticket</li>
+</ul>
+</section>
+
+<section class="mt-12">
+<h2>Interview-Ready Summary</h2>
+<p>If asked “Do you understand agents?”, a strong answer is:</p>
+<blockquote>
+<p>I design agentic systems as controlled decision loops: intent detection, planning, tool use, policy-gated action, and auditable memory. Bedrock handles model intelligence, while orchestration and safety layers ensure production reliability.</p>
+</blockquote>
+</section>
+
+<section class="mt-12">
+<h2>Final Thought</h2>
+<p>Agentic flow is not just “using an LLM.” It’s building a reliable, policy-aware runtime where models reason, tools execute, and governance protects business outcomes. That is what separates demos from production systems.</p>
+<p class="mt-6"><a href="../blog.html">← Back to all blogs</a></p>
+</section>
+
+</article>
+</main>
+
+<footer class="text-center py-8 border-t border-gray-800 mt-16">
+<p class="text-xs text-gray-600 tracking-wide">&copy; 2026 spidy. The web was spun with code.</p>
+</footer>
+</div>
+<script src="../js/main.js"></script>
+</body>
+</html>
